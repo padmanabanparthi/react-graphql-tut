@@ -2,24 +2,27 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
+
+import Courses from "./Courses";
+
+const client = new ApolloClient({
+  uri: "https://api.graph.cool/simple/v1/ciyz901en4j590185wkmexyex"
+});
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <ApolloProvider client={client}>
+        <div className="container">
+          <nav className="navbar navbar-dark bg-primary">
+            <a className="navbar-brand" href="#">React and GraphQL - Sample Application</a>
+          </nav>
+          <div className="row mt-4">
+          <Courses />
+          </div>
+        </div>
+      </ApolloProvider>
   );
 }
 
