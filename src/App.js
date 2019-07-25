@@ -1,14 +1,19 @@
 import React from 'react';
 import './App.css';
 
+//for router
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 //apollo graphql imports 
 import { ApolloProvider } from "react-apollo";
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 
-//import category page
+//import pages and navbar components
 import Categories from "./Categories";
+import AppRouter from "./UserAppRouter";
+import Navbar from './Navbar';
 
 
 const cache = new InMemoryCache();
@@ -28,18 +33,24 @@ const client = new ApolloClient({
 
 function App() {
   return (
+      <ApolloProvider client={client}>
+        <React.Fragment>
+          <AppRouter />
+        </React.Fragment>
+      </ApolloProvider>
       
-        <div className="container">
-          <nav className="navbar navbar-dark bg-primary">
-            <a className="navbar-brand" href="#">React and GraphQL - Sample Application</a>
-          </nav>
-          <div className="row mt-4">
-          <ApolloProvider client={client}>
-            <Categories />
-          </ApolloProvider>
+        // <div className="container">
+        //   <nav className="navbar navbar-dark bg-primary">
+        //     <a className="navbar-brand" href="#">React and GraphQL - Sample Application</a>
+        //     <Navbar/>
+        //   </nav>
+        //   <div className="row mt-4">
+        //   <ApolloProvider client={client}>
+        //     <Categories />
+        //   </ApolloProvider>
          
-          </div>
-        </div>
+        //   </div>
+        // </div>
       
   );
 }
