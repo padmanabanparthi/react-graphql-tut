@@ -1,28 +1,46 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-import ApolloClient from "apollo-boost";
+//apollo graphql imports 
 import { ApolloProvider } from "react-apollo";
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
 
-import Courses from "./Courses";
+//import category page
+import Categories from "./Categories";
+
+
+const cache = new InMemoryCache();
+const link = new HttpLink({
+  uri: "https://hype-api.herokuapp.com/commands",
+  headers: {
+    "X-Hype-Language" : "en",
+    "X-Hype-App" :"eyJhbGciOiJub25lIn0.eyJkYXRhIjoiNWI5MTk2YTY5YzBlNWYwMDAxNmY2MTdmIn0.",
+    "X-Hype-User" :"eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjoiMzEwY2VkMzcyMDBiMWEwZGFlMjVlZGIyNjNmZTUyYzQ5MWY2ZTQ2NzI2OGFjYWIwZmZlYzA2NjY2ZTJlZDk1OSIsImV4cCI6MTU0NTgzOTAyMX0.u47jzF_y9mgH-aSPAkF4Y3nJJdW2RS07QSsN0HlYQXw"
+  },
+})
 
 const client = new ApolloClient({
-  uri: "https://api.graph.cool/simple/v1/ciyz901en4j590185wkmexyex"
-});
+  cache,
+  link
+})
 
 function App() {
   return (
-      <ApolloProvider client={client}>
+      
         <div className="container">
           <nav className="navbar navbar-dark bg-primary">
             <a className="navbar-brand" href="#">React and GraphQL - Sample Application</a>
           </nav>
           <div className="row mt-4">
-          <Courses />
+          <ApolloProvider client={client}>
+            <Categories />
+          </ApolloProvider>
+         
           </div>
         </div>
-      </ApolloProvider>
+      
   );
 }
 
